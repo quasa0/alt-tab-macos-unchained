@@ -1,5 +1,7 @@
 # AltTab Unchained
 
+[![AltTab screenshot](docs/public/demo/frontpage.jpg)](docs/public/demo/frontpage.jpg)
+
 This repository is a fork of [lwouis/alt-tab-macos](https://github.com/lwouis/alt-tab-macos), cloned from the upstream `v10.12.0` source and modified for a local, privacy-preserving build.
 
 AltTab brings Windows-style alt-tab window switching to macOS. This fork keeps the core switching behavior while removing network-facing update, crash-reporting, feedback, support, and paid/support-related surfaces from the app build.
