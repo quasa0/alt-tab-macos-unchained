@@ -1,5 +1,4 @@
 import Cocoa
-import Sparkle
 
 class PreferencesEvents {
     private static var initialized = false
@@ -31,7 +30,6 @@ class PreferencesEvents {
     static func initialize() {
         guard !initialized else { return }
         initialized = true
-        UserDefaultsEvents.observe()
         ControlsTab.initializePreferencesDependentState()
         applyMenubarPreferencesIfReady()
         applyUpdatePolicyPreference()
@@ -68,18 +66,17 @@ class PreferencesEvents {
 
     private static func applyUpdatePolicyPreference() {
         GeneralTab.policyLock = true
-        let policy = Preferences.updatePolicy
-        SUUpdater.shared().automaticallyDownloadsUpdates = policy == .autoInstall
-        SUUpdater.shared().automaticallyChecksForUpdates = policy == .autoInstall || policy == .autoCheck
+        UserDefaults.standard.set(false, forKey: "SUAutomaticallyUpdate")
+        UserDefaults.standard.set(false, forKey: "SUEnableAutomaticChecks")
+        Preferences.set("updatePolicy", UpdatePolicyPreference.manual.indexAsString, false)
+        Preferences.set("crashPolicy", CrashPolicyPreference.never.indexAsString, false)
         GeneralTab.policyLock = false
     }
 
     private static func applyStartAtLoginPreference() {
-        var preferenceEnabled = Preferences.startAtLogin
-        if (PreferencesEvents.self as AvoidDeprecationWarnings.Type).removeLoginItemIfPresent() && !preferenceEnabled {
-            preferenceEnabled = true
-            Preferences.set("startAtLogin", "true", false)
-        }
+        let preferenceEnabled = false
+        _ = (PreferencesEvents.self as AvoidDeprecationWarnings.Type).removeLoginItemIfPresent()
+        Preferences.set("startAtLogin", "false", false)
         do {
             try writePlistToDisk(preferenceEnabled)
         } catch let error {

@@ -1,5 +1,4 @@
 import Cocoa
-import Sparkle
 
 class UserDefaultsEvents: NSObject {
     private static var policyObserver = UserDefaultsEvents()
@@ -20,18 +19,14 @@ class UserDefaultsEvents: NSObject {
         Logger.debug { "\(keyPath ?? "keyPath:nil") updatePolicy:\(Preferences.updatePolicy) policyLock:\(GeneralTab.policyLock)" }
         guard !GeneralTab.policyLock else { return }
         let id = buttonIdToUpdate()
-        if id == 2 {
-            // Sparkle UI "Automatically download and install updates in the future" doesn't activate periodical checks; we do it manually
-            SUUpdater.shared().automaticallyChecksForUpdates = true
-        }
         GeneralTab.updatesPolicyDropdown?.selectItem(at: id)
         Preferences.set("updatePolicy", String(id))
     }
 
     private func buttonIdToUpdate() -> Int {
-        if SUUpdater.shared().automaticallyDownloadsUpdates {
+        if UserDefaults.standard.bool(forKey: "SUAutomaticallyUpdate") {
             return 2
-        } else if SUUpdater.shared().automaticallyChecksForUpdates {
+        } else if UserDefaults.standard.bool(forKey: "SUEnableAutomaticChecks") {
             return 1
         }
         return 0

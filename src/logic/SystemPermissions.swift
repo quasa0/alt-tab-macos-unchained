@@ -32,7 +32,7 @@ class SystemPermissions {
             }
         }
         DispatchQueue.main.async {
-            Menubar.togglePermissionCallout(ScreenRecordingPermission.status != .granted)
+            Menubar.togglePermissionCallout(ScreenRecordingPermission.status == .notGranted)
             if PermissionsWindow.shared != nil {
                 PermissionsWindow.updatePermissionViews()
             }
@@ -102,8 +102,9 @@ class ScreenRecordingPermission {
 
     private static func detect() -> PermissionStatus {
         if #available(macOS 10.15, *) {
+            if Preferences.screenRecordingPermissionSkipped { return .skipped }
             return isGrantedOnSomeDisplay() ? .granted :
-                (Preferences.screenRecordingPermissionSkipped ? .skipped : .notGranted)
+                .notGranted
         }
         return .granted
     }

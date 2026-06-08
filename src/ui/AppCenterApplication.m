@@ -1,11 +1,9 @@
 @import Cocoa;
-@import AppCenterCrashes;
 #import "AppCenterApplication.h"
 
 @implementation AppCenterApplication
 
 - (void)reportException:(NSException *)exception {
-    [MSACCrashes applicationDidReportException:exception];
     [super reportException:exception];
 }
 

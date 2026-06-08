@@ -1,5 +1,4 @@
 import Cocoa
-import Sparkle
 
 class GeneralTab {
     static var menubarIconDropdown: NSPopUpButton?
@@ -20,12 +19,6 @@ class GeneralTab {
             ])
         let language = TableGroupView.Row(leftTitle: NSLocalizedString("Language", comment: ""),
             rightViews: [LabelAndControl.makeDropdown("language", LanguagePreference.allCases, extraAction: setLanguageCallback)])
-        updatesPolicyDropdown = LabelAndControl.makeDropdown("updatePolicy", UpdatePolicyPreference.allCases)
-        let updatesPolicy = TableGroupView.Row(leftTitle: NSLocalizedString("Updates policy", comment: ""),
-            rightViews: [updatesPolicyDropdown!])
-        crashPolicyDropdown = LabelAndControl.makeDropdown("crashPolicy", CrashPolicyPreference.allCases)
-        let crashPolicy = TableGroupView.Row(leftTitle: NSLocalizedString("Crash reports policy", comment: ""),
-            rightViews: [crashPolicyDropdown!])
         for i in 0..<MenubarIconPreference.allCases.count {
             let image = NSImage.initCopy("menubar-\(i)")
             image.isTemplate = i < 2
@@ -45,16 +38,11 @@ class GeneralTab {
         table.addRow(captureWindowsInBackground)
         table.addNewTable()
         table.addRow(language)
-        table.addNewTable()
-        table.addRow(updatesPolicy)
-        table.addRow(crashPolicy)
         let exportButton = NSButton(title: NSLocalizedString("Export settings…", comment: ""), target: nil, action: nil)
         exportButton.onAction = { _ in exportSettings() }
         let importButton = NSButton(title: NSLocalizedString("Import settings…", comment: ""), target: nil, action: nil)
         importButton.onAction = { _ in importSettings() }
-        let checkForUpdates = NSButton(title: NSLocalizedString("Check for updates now…", comment: ""), target: nil, action: nil)
-        checkForUpdates.onAction = { control in checkForUpdatesNow(control) }
-        let tools = StackView([exportButton, importButton, checkForUpdates], .horizontal)
+        let tools = StackView([exportButton, importButton], .horizontal)
         let view = TableGroupSetView(originalViews: [table, tools], bottomPadding: 0)
         return view
     }
@@ -92,7 +80,7 @@ class GeneralTab {
     }
 
     @objc static func checkForUpdatesNow(_ sender: Any?) {
-        SUUpdater.shared().checkForUpdates(sender)
+        Logger.info { "Update checks are disabled in this local build" }
     }
 
     private static func exportSettings() {

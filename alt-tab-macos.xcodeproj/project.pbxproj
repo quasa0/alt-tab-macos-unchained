@@ -2481,14 +2481,12 @@
 				"${PODS_ROOT}/Target Support Files/Pods-alt-tab-macos/Pods-alt-tab-macos-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/LetsMove/LetsMove.framework",
 				"${BUILT_PRODUCTS_DIR}/ShortcutRecorder/ShortcutRecorder.framework",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LetsMove.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ShortcutRecorder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
